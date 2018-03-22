@@ -44,7 +44,7 @@ $requete->execute();
 
 $retour["interventions"]["nb"] = count($requete->fetchAll());
 $requete->execute();
-$retour["interventions"]["categories"] = $requete->fetchAll();
+$retour["interventions"]["liste_int"] = $requete->fetchAll();
 
 //##############################################################Clients#####################################################################
 
@@ -61,7 +61,7 @@ $requete->execute();
 
 $retour["clients"]["nb"] = count($requete->fetchAll());
 $requete->execute();
-$retour["clients"]["categories"] = $requete->fetchAll();
+$retour["clients"]["liste_cli"] = $requete->fetchAll();
 
 //##############################################################Motives#####################################################################
 
@@ -78,7 +78,7 @@ $requete->execute();
 
 $retour["motifs"]["nb"] = count($requete->fetchAll());
 $requete->execute();
-$retour["motifs"]["categories"] = $requete->fetchAll();
+$retour["motifs"]["liste_mot"] = $requete->fetchAll();
 
 
 
@@ -122,7 +122,7 @@ if(!empty($_POST['action']) && !empty($_POST['id_inter'])){
 
   }
   else{
-    $retour["modif_intervention"]= false;
+    $retour["modif_intervention"]= "code action incorrect";
   }
 
 

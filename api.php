@@ -5,6 +5,7 @@ header('Content-Type: application/json');
 //$_POST['id_intervention']= 299998;
 //$_POST['id_client']= 299998;
 //$_POST['id_motive']= 299998;
+$_POST['action'] = 'fin';
 
 try{
     $db = new PDO('sqlsrv:Server=wserver.area42.fr;Database=mygavoltpins', 'mygavolt', 'k2Y*bswsaFyss3j7*Hsf',array(
@@ -12,7 +13,7 @@ try{
         PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING
     ));
     $retour["success"] = true;
-    $retour["message"] = "Connexion à la base";
+    $retour["message"] = "Connexion gf base";
 
 }catch(PDOException $e){
     $retour["success"] = false;
@@ -20,7 +21,12 @@ try{
 }
 
 
-
+if(isset($_POST['action'])){
+  $retour["action"] = $_POST['action'];
+}
+else{
+  $retour["action"] = "no";
+}
 
 
 //##############################################################Interventions#####################################################################
@@ -79,9 +85,9 @@ $retour["motifs"]["categories"] = $requete->fetchAll();
 
 
 
-$_POST['report']  = "blablabal balb  balbalbla bla blabla ";
+$_POST['report']  = "prout";
 $_POST['duration']= "01:00:00";
-//$_POST['pending'] = 1;
+$_POST['pending'] = 1;
 $_POST['action']  = 'fin';
 $_POST['id_inter']= '100000';
 

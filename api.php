@@ -42,9 +42,9 @@ else{
 $requete->execute();
 }
 
-$retour["interventions"]["nb"] = count($requete->fetch(PDO::FETCH_OBJ));
+$retour["interventions"]["nb"] = count($requete->fetchAll());
 $requete->execute();
-$retour["interventions"]["liste_int"] = $requete->fetch(PDO::FETCH_OBJ);
+$retour["interventions"]["liste_int"] = $requete->fetchAll();
 
 //##############################################################Clients#####################################################################
 
@@ -59,9 +59,9 @@ else{
 $requete->execute();
 }
 
-$retour["clients"]["nb"] = count($requete->fetch(PDO::FETCH_OBJ));
+$retour["clients"]["nb"] = count($requete->fetchAll());
 $requete->execute();
-$retour["clients"]["liste_cli"] = $requete->fetch(PDO::FETCH_OBJ);
+$retour["clients"]["liste_cli"] = $requete->fetchAll();
 
 //##############################################################Motives#####################################################################
 
@@ -76,9 +76,9 @@ else{
 $requete->execute();
 }
 
-$retour["motifs"]["nb"] = count($requete->fetch(PDO::FETCH_OBJ));
+$retour["motifs"]["nb"] = count($requete->fetchAll());
 $requete->execute();
-$retour["motifs"]["liste_mot"] = $requete->fetch(PDO::FETCH_OBJ);
+$retour["motifs"]["liste_mot"] = $requete->fetchAll();
 
 
 

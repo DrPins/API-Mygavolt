@@ -2,10 +2,11 @@
 
 
 header('Content-Type: application/json');
-//$_POST['id_intervention']= 299998;
-//$_POST['id_client']= 299998;
+//$_POST['id_intervention']= 1000;
 //$_POST['id_motive']= 299998;
-$_POST['action'] = 'fin';
+//$_POST['id_client']= 299998;
+$_POST['id_employee'] = 301;
+$_POST['action'] = 'no';
 
 try{
     $db = new PDO('sqlsrv:Server=wserver.area42.fr;Database=mygavoltpins', 'mygavolt', 'k2Y*bswsaFyss3j7*Hsf',array(
@@ -13,7 +14,7 @@ try{
         PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING
     ));
     $retour["success"] = true;
-    $retour["message"] = "Connexion gf base";
+    $retour["message"] = "Connexion base";
 
 }catch(PDOException $e){
     $retour["success"] = false;
@@ -31,20 +32,35 @@ else{
 
 //##############################################################Interventions#####################################################################
 
-if(!empty($_POST['id_intervention'])){
-  $id = $_POST['id_intervention'];
-  $requete  = $db->prepare("SELECT * FROM interventions where id ='$id' order by date_inter");
+
+
+if(!empty($_POST['id_intervention']) && !empty($_POST['id_employee']) ){
+
+  //selection d'une seule intervention
+  $id_inter = $_POST['id_intervention'];
+  $id_employee = $_POST['id_employee'];
+  $requete  = $db->prepare("SELECT interventions.id as id_inter, date_inter, firstname, lastname, company, address1, address2, zipcode, city, phone, motives.label as motive,  report, pending, duration
+                            from interventions
+                            inner join clients on clients.id = id_client
+                            inner join motives on motives.id = id_motive
+                            where id_employee ='$id_employee' and interventions.id = $id_inter");
   $requete->execute();
 
 }
-else{
-  $requete = $db->prepare("SELECT * FROM interventions order by date_inter");
+else if (!empty($_POST['id_employee'])){
+  // selection de toutes les interventions d'un employé
+  $id_employee = $_POST['id_employee'];
+  $requete = $db->prepare("SELECT interventions.id as id_inter, date_inter, firstname, lastname, company, address1, address2, zipcode, city, phone, motives.label as motive,  report, pending, duration
+                            from interventions
+                            inner join clients on clients.id = id_client
+                            inner join motives on motives.id = id_motive
+                            where id_employee ='$id_employee' order by date_inter");
 $requete->execute();
 }
 
-$retour["interventions"]["nb"] = count($requete->fetchAll());
+$retour["id_intervention_total"]["nb"] = count($requete->fetchAll());
 $requete->execute();
-$retour["interventions"]["liste_int"] = $requete->fetchAll();
+$retour["id_intervention_total"]["liste_int"] = $requete->fetchAll();
 
 //##############################################################Clients#####################################################################
 

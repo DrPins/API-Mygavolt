@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 //$_POST['id_intervention']= 1000;
 //$_POST['id_motive']= 299998;
 //$_POST['id_client']= 299998;
-$_POST['lastname'] = 'Saquedeneu';
+//$_POST['lastname'] = 'Saquedeneu';
 //$_POST['action'] = 'fin';
 //$_POST['report'] = 'tata';
 //$_POST['duration'] = '02:00:00';
@@ -50,6 +50,7 @@ else{
   $retour["duration"] = "";
 }
 
+
 //var_dump($_POST);
 //var_dump($retour);
 
@@ -77,23 +78,34 @@ if(!empty($_POST['id_intervention']) && !empty($_POST['lastname']) ){
   //selection d'une seule intervention
   $id_inter = $_POST['id_intervention'];
   $lastname = $_POST['lastname'];
-  $requete  = $db->prepare("SELECT interventions.id as id_inter, date_inter, firstname, lastname, company, address1, address2, zipcode, city, phone, motives.label as motive,  report, pending, duration
+
+
+
+  $requete  = $db->prepare("SELECT interventions.id as id_inter, date_inter, clients.firstname, clients.lastname, company, address1, address2, clients.zipcode, clients.city, clients.phone, motives.label as motive,  report, pending, duration
                             from interventions
                             inner join clients on clients.id = id_client
                             inner join motives on motives.id = id_motive
-                            where lastname ='$lastname' and interventions.id = $id_inter");
+                            inner join employees on id_employee = employees.id
+                            where employees.lastname ='$lastname' and interventions.id = $id_intervention");
   $requete->execute();
+
+  $retour["employeeFound"] = count($requete->fetchAll());
 
 }
 else if (!empty($_POST['lastname'])){
   // selection de toutes les interventions d'un employé
   $lastname = $_POST['lastname'];
-  $requete = $db->prepare("SELECT interventions.id as id_inter, date_inter, firstname, lastname, company, address1, address2, zipcode, city, phone, motives.label as motive,  report, pending, duration
+
+
+  $requete = $db->prepare("SELECT interventions.id as id_inter, date_inter, clients.firstname, clients.lastname, company, address1, address2, clients.zipcode, clients.city, clients.phone, motives.label as motive,  report, pending, duration
                             from interventions
                             inner join clients on clients.id = id_client
                             inner join motives on motives.id = id_motive
-                            where lastname ='$lastname' order by date_inter");
-$requete->execute();
+                            inner join employees on id_employee = employees.id
+                            where employees.lastname ='$lastname' order by date_inter");
+  $requete->execute();
+
+  $retour["employeeFound"] = count($requete->fetchAll());
 }
 
 $retour["id_intervention_total"]["nb"] = count($requete->fetchAll());

@@ -90,6 +90,7 @@ if(!empty($_POST['id_intervention']) && !empty($_POST['lastname']) ){
   $requete->execute();
 
   $retour["employeeFound"] = count($requete->fetchAll());
+  $retour["employee"] = $_POST['lastname'];
 
 }
 else if (!empty($_POST['lastname'])){
@@ -106,6 +107,7 @@ else if (!empty($_POST['lastname'])){
   $requete->execute();
 
   $retour["employeeFound"] = count($requete->fetchAll());
+  $retour["employee"] = $_POST['lastname'];
 }
 
 $retour["id_intervention_total"]["nb"] = count($requete->fetchAll());

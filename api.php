@@ -2,13 +2,13 @@
 
 
 header('Content-Type: application/json');
-$_POST['id_intervention']= 1000;
+//$_POST['id_intervention']= 1000;
 //$_POST['id_motive']= 299998;
 //$_POST['id_client']= 299998;
 $_POST['id_employee'] = 301;
-$_POST['action'] = 'fin';
-$_POST['report'] = 'tata';
-$_POST['duration'] = '01:00:00';
+//$_POST['action'] = 'fin';
+//$_POST['report'] = 'tata';
+//$_POST['duration'] = '01:00:00';
 
 //##############################################################Connexion à la base#####################################################################
 try{
@@ -50,8 +50,8 @@ else{
   $retour["duration"] = "";
 }
 
-var_dump($_POST);
-var_dump($retour);
+//var_dump($_POST);
+//var_dump($retour);
 
 /*
 if(isset($_POST['action'])){
@@ -150,8 +150,8 @@ $retour["motifs"]["liste_mot"] = $requete->fetchAll();
 //##############################################################Interventions#####################################################################
 
 
-echo $_POST['action'];
-echo $_POST['id_intervention'];
+//echo $_POST['action'];
+//echo $_POST['id_intervention'];
 
 
 if(isset($_POST['action']) && isset($_POST['id_intervention'])){
@@ -199,6 +199,6 @@ else{
 }
 
 
-//echo json_encode($retour);
+echo json_encode($retour);
 
 

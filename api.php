@@ -5,10 +5,10 @@ header('Content-Type: application/json');
 //$_POST['id_intervention']= 1000;
 //$_POST['id_motive']= 299998;
 //$_POST['id_client']= 299998;
-$_POST['id_employee'] = 301;
+$_POST['lastname'] = 'Saquedeneu';
 //$_POST['action'] = 'fin';
 //$_POST['report'] = 'tata';
-//$_POST['duration'] = '01:00:00';
+//$_POST['duration'] = '02:00:00';
 
 //##############################################################Connexion à la base#####################################################################
 try{
@@ -72,27 +72,27 @@ $retour["duration"] = $_POST['duration'];
 
 
 
-if(!empty($_POST['id_intervention']) && !empty($_POST['id_employee']) ){
+if(!empty($_POST['id_intervention']) && !empty($_POST['lastname']) ){
 
   //selection d'une seule intervention
   $id_inter = $_POST['id_intervention'];
-  $id_employee = $_POST['id_employee'];
+  $lastname = $_POST['lastname'];
   $requete  = $db->prepare("SELECT interventions.id as id_inter, date_inter, firstname, lastname, company, address1, address2, zipcode, city, phone, motives.label as motive,  report, pending, duration
                             from interventions
                             inner join clients on clients.id = id_client
                             inner join motives on motives.id = id_motive
-                            where id_employee ='$id_employee' and interventions.id = $id_inter");
+                            where lastname ='$lastname' and interventions.id = $id_inter");
   $requete->execute();
 
 }
-else if (!empty($_POST['id_employee'])){
+else if (!empty($_POST['lastname'])){
   // selection de toutes les interventions d'un employé
-  $id_employee = $_POST['id_employee'];
+  $lastname = $_POST['lastname'];
   $requete = $db->prepare("SELECT interventions.id as id_inter, date_inter, firstname, lastname, company, address1, address2, zipcode, city, phone, motives.label as motive,  report, pending, duration
                             from interventions
                             inner join clients on clients.id = id_client
                             inner join motives on motives.id = id_motive
-                            where id_employee ='$id_employee' order by date_inter");
+                            where lastname ='$lastname' order by date_inter");
 $requete->execute();
 }
 
@@ -173,14 +173,14 @@ if(isset($_POST['action']) && isset($_POST['id_intervention'])){
       $duration = $_POST['duration'];
       $report  = $_POST['report'];
 
-      echo "UPDATE interventions SET pending = 1, report ='$report', duration='$duration'  where id = '$id_inter'";
+      //echo "UPDATE interventions SET pending = 1, report ='$report', duration='$duration'  where id = '$id_inter'";
 
       $requete = $db->prepare("UPDATE interventions SET pending = 1, report ='$report', duration='$duration'  where id = '$id_inter'");
       $requete->execute();
 
     }
     else{
-      $retour["modif_intervention"]= false;
+      $retour["modif_intervention"]= 'premiere boucle ok';
     }
 
 
@@ -195,7 +195,7 @@ if(isset($_POST['action']) && isset($_POST['id_intervention'])){
 
 }
 else{
-  $retour["modif_intervention"]= false;
+  $retour["modif_intervention"]= 'pas rendtre dans la boucle';
 }
 
 

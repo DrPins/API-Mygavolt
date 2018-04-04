@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 //$_POST['id_motive']= 299998;
 //$_POST['id_client']= 299998;
 $_POST['id_employee'] = 301;
-$_POST['action'] = 'no';
+//$_POST['action'] = 'no';
 
 try{
     $db = new PDO('sqlsrv:Server=wserver.area42.fr;Database=mygavoltpins', 'mygavolt', 'k2Y*bswsaFyss3j7*Hsf',array(

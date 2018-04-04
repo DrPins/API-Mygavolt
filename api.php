@@ -2,12 +2,15 @@
 
 
 header('Content-Type: application/json');
-//$_POST['id_intervention']= 1000;
+$_POST['id_intervention']= 1000;
 //$_POST['id_motive']= 299998;
 //$_POST['id_client']= 299998;
 $_POST['id_employee'] = 301;
-//$_POST['action'] = 'no';
+$_POST['action'] = 'fin';
+$_POST['report'] = 'tata';
+$_POST['duration'] = '01:00:00';
 
+//##############################################################Connexion à la base#####################################################################
 try{
     $db = new PDO('sqlsrv:Server=wserver.area42.fr;Database=mygavoltpins', 'mygavolt', 'k2Y*bswsaFyss3j7*Hsf',array(
         PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8',
@@ -21,7 +24,7 @@ try{
     $retour["message"] = "Connexion à la base de donnée impossible";
 }
 
-
+//##############################################################Affichage des valeurs des variables #####################################################
 if(isset($_POST['action'])){
   $retour["action"] = $_POST['action'];
 }
@@ -29,8 +32,41 @@ else{
   $retour["action"] = "no";
 }
 
-$retour["action"] = "fin";
+
+
+if(isset($_POST['report'])){
+  $retour["report"] = $_POST['report'];
+}
+else{
+  $retour["report"] = "";
+}
+
+
+
+if(isset($_POST['duration'])){
+  $retour["duration"] = $_POST['duration'];
+}
+else{
+  $retour["duration"] = "";
+}
+
+var_dump($_POST);
+var_dump($retour);
+
+/*
+if(isset($_POST['action'])){
+  $retour["action"] = $_POST['action'];
+}
+else{
+  $retour["action"] = "no";
+}
+
+$retour["action"] = $_POST['action'];
 $retour["modif_intervention"] = "non";
+$retour["id_inter"] = $_POST['id_intervention'];
+$retour["report"] = $_POST['report'];
+$retour["duration"] = $_POST['duration'];
+*/
 
 //##############################################################Interventions#####################################################################
 
@@ -65,7 +101,7 @@ $requete->execute();
 $retour["id_intervention_total"]["liste_int"] = $requete->fetchAll();
 
 //##############################################################Clients#####################################################################
-
+/*
 if(!empty($_POST['id_client'])){
   $id = $_POST['id_client'];
   $requete  = $db->prepare("SELECT * FROM clients where id ='$id'");
@@ -109,26 +145,36 @@ $retour["motifs"]["liste_mot"] = $requete->fetchAll();
 //$_POST['action']  = 'fin';
 //$_POST['id_inter']= '100000';
 
-
+*/
 
 //##############################################################Interventions#####################################################################
 
-if(!empty($_POST['action']) && !empty($_POST['id_inter'])){
 
-  $id_inter=$_POST['id_inter'];
+echo $_POST['action'];
+echo $_POST['id_intervention'];
+
+
+if(isset($_POST['action']) && isset($_POST['id_intervention'])){
+
+  $id_inter=$_POST['id_intervention'];
 
   if($_POST['action'] == 'debut'){
-    // si l'intervention commence, on passe pending à 0
+    // si l'intervention coid_interventionmmence, on passe pending à 0
      $requete  = $db->prepare("UPDATE interventions SET pending = 0 where id = '$id_inter'");
      $requete->execute();
     }
   else if ($_POST['action'] == 'fin'){
 
-    if(!empty($_POST['report']) && !empty($_POST['duration'])){
+    if(isset($_POST['report']) && isset($_POST['duration'])){
+
+
 
       // si l'intervention fini, on ajouter en base le temps et le rapport et on passe pending à 1
       $duration = $_POST['duration'];
       $report  = $_POST['report'];
+
+      echo "UPDATE interventions SET pending = 1, report ='$report', duration='$duration'  where id = '$id_inter'";
+
       $requete = $db->prepare("UPDATE interventions SET pending = 1, report ='$report', duration='$duration'  where id = '$id_inter'");
       $requete->execute();
 
@@ -153,6 +199,6 @@ else{
 }
 
 
-echo json_encode($retour);
+//echo json_encode($retour);
 
 

@@ -29,6 +29,8 @@ else{
   $retour["action"] = "no";
 }
 
+$retour["action"] = "fin";
+$retour["modif_intervention"] = "non";
 
 //##############################################################Interventions#####################################################################
 
@@ -101,11 +103,11 @@ $retour["motifs"]["liste_mot"] = $requete->fetchAll();
 
 
 
-$_POST['report']  = "prout";
-$_POST['duration']= "01:00:00";
-$_POST['pending'] = 1;
-$_POST['action']  = 'fin';
-$_POST['id_inter']= '100000';
+//$_POST['report']  = "prout";
+//$_POST['duration']= "01:00:00";
+//$_POST['pending'] = 1;
+//$_POST['action']  = 'fin';
+//$_POST['id_inter']= '100000';
 
 
 

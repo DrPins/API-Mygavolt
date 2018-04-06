@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 //$_POST['id_intervention']= 1000;
 //$_POST['id_motive']= 299998;
 //$_POST['id_client']= 299998;
-$_POST['lastname'] = 'Saquedeneu';
+//$_POST['lastname'] = 'Saquedeneu';
 //$_POST['action'] = 'fin';
 //$_POST['report'] = 'tata';
 //$_POST['duration'] = '02:00:00';
@@ -73,7 +73,7 @@ $retour["duration"] = $_POST['duration'];
 
 
 
-if(!empty($_POST['id_intervention']) && !empty($_POST['lastname']) ){
+if(isset($_POST['id_intervention']) && isset($_POST['lastname']) ){
 
   //selection d'une seule intervention
   $id_inter = $_POST['id_intervention'];
@@ -93,7 +93,7 @@ if(!empty($_POST['id_intervention']) && !empty($_POST['lastname']) ){
   $retour["employee"] = $_POST['lastname'];
 
 }
-else if (!empty($_POST['lastname'])){
+else if (isset($_POST['lastname'])){
   // selection de toutes les interventions d'un employé
   $lastname = $_POST['lastname'];
 

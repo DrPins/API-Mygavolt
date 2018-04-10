@@ -70,11 +70,12 @@ $retour["duration"] = $_POST['duration'];
 */
 
 //##############################################################Interventions#####################################################################
-
+echo 'toto';
 
 
 if(isset($_POST['id_intervention']) && isset($_POST['lastname']) ){
 
+  echo 'tutu';
   //selection d'une seule intervention
   $id_inter = $_POST['id_intervention'];
   $lastname = $_POST['lastname'];
@@ -95,6 +96,7 @@ if(isset($_POST['id_intervention']) && isset($_POST['lastname']) ){
 }
 else if (isset($_POST['lastname'])){
   // selection de toutes les interventions d'un employé
+  echo 'coco';
   $lastname = $_POST['lastname'];
 
 
@@ -106,10 +108,11 @@ else if (isset($_POST['lastname'])){
                             where employees.lastname ='$lastname' order by date_inter");
   $requete->execute();
 
+
   $retour["employeeFound"] = count($requete->fetchAll());
   $retour["employee"] = $_POST['lastname'];
 }
-
+var_dump($retour["id_intervention_total"]["nb"]);
 $retour["id_intervention_total"]["nb"] = count($requete->fetchAll());
 $requete->execute();
 $retour["id_intervention_total"]["liste_int"] = $requete->fetchAll();
@@ -213,6 +216,6 @@ else{
 }
 
 
-echo json_encode($retour);
+//echo json_encode($retour);
 
 

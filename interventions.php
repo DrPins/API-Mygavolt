@@ -17,7 +17,7 @@ $requete = $db->prepare("SELECT interventions.id as id_inter, date_inter, client
                           inner join clients on clients.id = id_client
                           inner join motives on motives.id = id_motive
                           inner join employees on id_employee = employees.id
-                          where employees.lastname ='$lastname' and date_inter >= now() order by date_inter");
+                          where employees.lastname ='$lastname' and date_inter >= getdate() order by date_inter");
 
 $requete->execute();
 $result = $requete->fetchAll();

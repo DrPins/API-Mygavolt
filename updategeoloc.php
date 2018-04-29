@@ -4,7 +4,9 @@ require_once('common.php');
 
 
 $lastname = $_POST['lastname'];
-$coordinates = $_POST['coordinates'];
+$lat = $_POST['lat'];
+$lng = $_POST['lng'];
+
 
 if(!isset($lastname) || !isset($coordinates)){
  echo "";
@@ -16,7 +18,7 @@ if(!isset($lastname) || !isset($coordinates)){
 
 // si l'intervention fini, on ajouter en base le temps et le rapport et on passe pending à 1
 
-$requete = $db->prepare("INSERT INTO positions (id_employee, date_position, position) VALUES ((select id from employees where lastname = '$lastname'),GETDATE(), '$coordinates' )");
+$requete = $db->prepare("INSERT INTO positions (id_employee, date_position, lat, lng) VALUES ((select id from employees where lastname = '$lastname'),GETDATE(), '$lat', '$lng' )");
 $requete->execute();
 
 ?>

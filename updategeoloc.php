@@ -18,7 +18,7 @@ if(!isset($lastname) || !isset($lat)){
 
 // si l'intervention fini, on ajouter en base le temps et le rapport et on passe pending à 1
 
-$requete = $db->prepare("INSERT INTO coordinates (id_employee, date_position, lat, lng) VALUES ((select id from employees where lastname = '$lastname'),GETDATE(), '$lat' )");
+$requete = $db->prepare("INSERT INTO coordinates (id_employee, date_position, lat) VALUES ((select id from employees where lastname = '$lastname'),GETDATE(), '$lat' )");
 $requete->execute();
 
 ?>

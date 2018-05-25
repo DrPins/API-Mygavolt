@@ -9,7 +9,7 @@ $duration = $_POST['duration'];
 if(!isset($id_inter) || !isset($report) || !isset($duration) ){
  echo "";
  header('http/1.1 403 Forbiden');
- retun;
+ return;
 }
 
 // si l'intervention fini, on ajouter en base le temps et le rapport et on passe pending à 1

@@ -6,7 +6,7 @@ require_once('common.php');
 $id_inter = $_POST['id_intervention'];
 $report = $_POST['report'];
 $duration = $_POST['duration'];
-if(!isset($id_inter) || !isset($report) || !isset($duration) ){
+if(!isset($id_inter) || $report != "" || $duration != "00:00:00.0000000"){
  echo "";
  header('http/1.1 403 Forbiden');
  return;

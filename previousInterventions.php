@@ -12,7 +12,7 @@ if(!isset($lastname)){
 }
 
 
-$requete = $db->prepare("SELECT interventions.id as id_inter, date_inter, time_inter, clients.firstname, clients.lastname, company, address1, address2, clients.zipcode, clients.city, clients.phone, motives.label as motive,  report, pending, duration
+$requete = $db->prepare("SELECT interventions.id as id_inter, date_inter, distance, time_inter, clients.firstname, clients.lastname, company, address1, address2, clients.zipcode, clients.city, clients.phone, motives.label as motive,  report, pending, duration
                           from interventions
                           inner join clients on clients.id = id_client
                           inner join motives on motives.id = id_motive
